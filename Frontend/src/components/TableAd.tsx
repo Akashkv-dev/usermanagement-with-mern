@@ -12,6 +12,9 @@ import { ChangeEvent, useEffect, useState } from "react";
 import axios from "axios";
 // import { useNavigate } from "react-router-dom";
 import { isEmpty } from "../helper/validation";
+import { AddUser } from './AddUser';
+import { useSelector } from "react-redux";
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -42,8 +45,12 @@ type createData = {
 
 export const TableAd = () => {
   const [user, setUser] = useState<createData[]>([]);
-  // const navigate =useNavigate()
-
+  const openAddUser =useSelector((store)=>store.addUser.addOpen)
+  const [refresh,setRefresh] = useState<number>(0)
+  const pageRefresh= ()=>{
+    setRefresh(()=>refresh + 1)
+  
+  }
 
   const token = localStorage.getItem("admin");
   useEffect(() => {
@@ -64,7 +71,7 @@ export const TableAd = () => {
     } catch (error) {
       console.error(error);
     }
-  },[]);
+  },[refresh]);
 
   //edit*******
   const [openEdit,setOpenEdit]=useState<boolean>(false)
@@ -157,12 +164,14 @@ export const TableAd = () => {
           
         },
         data: {
-          deleteUserId: deleteUserId // assuming deleteUserId is the ID of the user you want to delete
+          deleteUserId: deleteUserId 
         }
       }
     )
     .then((response)=>{{
       console.log(response);
+           setUser(response.data.users)
+           closeDeleteModal()
       
     }})
   }
@@ -253,6 +262,10 @@ export const TableAd = () => {
   </div>
 </div>
 )}
+
+  {openAddUser &&(
+    <AddUser pageRefresh={pageRefresh}/>
+  )}
 </>
 
   );

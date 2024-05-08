@@ -10,12 +10,14 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { openAdduser } from '../Redux/adminSlice';
 
 export const Dashboard = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const navigate=useNavigate()
+  const dispatch =useDispatch();
   const tokenad=localStorage.getItem("admin")
         if(tokenad==null){
             navigate("/admin")
@@ -29,6 +31,10 @@ const logout=()=>{
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
+  const clickAddUser =()=>{
+    dispatch(openAdduser(true))
+  }
+ 
 
   return (
     <>
@@ -48,6 +54,7 @@ const logout=()=>{
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Admin Dashboard
             </Typography>
+            <Button color="inherit" onClick={clickAddUser}>Adduser</Button>
             <Button color="inherit" onClick={logout}>Logout</Button>
           </Toolbar>
         </AppBar>
@@ -63,6 +70,7 @@ const logout=()=>{
         </List>
       </Drawer>
     </div>
+    
     
     </>
   );

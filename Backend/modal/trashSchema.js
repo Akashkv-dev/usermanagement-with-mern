@@ -12,4 +12,4 @@ const trashSchema =new mongoose.Schema({
 
 })
 
-module.exports=mongoose.model('trash',trashSchema)
+module.exports=mongoose.model('trashes',trashSchema)

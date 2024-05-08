@@ -1,21 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
+interface AdminState {
+    addOpen: boolean;
+}
+
+const initialState: AdminState = {
+    addOpen: false,
+};
 
 const adminSlice=createSlice({
-    name:"admin",
-    initialState:{
-        admin:null
-    },
+    name:"addUser",
+    initialState,
+
     reducers:{
-        login:(state,action)=>{
-            state.admin=action.payload;
+        openAdduser:(state,action:PayloadAction<boolean>)=>{
+            state.addOpen=action.payload;
 
         },
-        logout:(state)=>{
-            state.admin=null
+        closeAdduser:(state)=>{
+            state.addOpen=false;
 
-        }
+        },
+        
     }
 })
 
-export const {login,logout }=adminSlice.actions;
+export const {openAdduser,closeAdduser }=adminSlice.actions;
 export default adminSlice.reducer;

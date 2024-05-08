@@ -3,7 +3,7 @@ import adminReducer from "./adminSlice";
 
 const appStore = configureStore({
     reducer:{
-        admin:adminReducer,
+        addUser:adminReducer,
         
     }
 });

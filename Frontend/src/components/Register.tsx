@@ -48,7 +48,8 @@ export const Register:React.FC = () => {
                 .then((response)=>{
                     if(response.status===200){
                         console.log(response);
-                        alert(response.data.message)
+                        // alert(response.data.message)
+                        navigate("/login")
                     }
                     else{
                        console.log("unhandled status code:",response.status);
