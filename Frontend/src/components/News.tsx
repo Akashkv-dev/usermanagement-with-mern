@@ -53,8 +53,8 @@ export const News = () => {
   }
   return (
     <div className="flex flex-wrap justify-center">
-      {data.map((item) => (
-        <div className="m-2">
+      {data.map((item,index) => (
+        <div className="m-2" key={index}>
             <Card  sx={{ maxWidth: 385, maxHeight:400 }}>
           <CardActionArea >
             <CardMedia

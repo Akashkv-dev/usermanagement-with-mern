@@ -46,6 +46,7 @@ type createData = {
 export const TableAd = () => {
   const [user, setUser] = useState<createData[]>([]);
   const openAddUser =useSelector((store)=>store.addUser.addOpen)
+  const search =useSelector((store)=>store.addUser.searchKeys)
   const [refresh,setRefresh] = useState<number>(0)
   const pageRefresh= ()=>{
     setRefresh(()=>refresh + 1)
@@ -175,6 +176,19 @@ export const TableAd = () => {
       
     }})
   }
+
+  useEffect(() =>{
+    axios.get(`http://localhost:3000/admin/searchuser${search ? `?search=${search}` : ''}`)
+    .then((response)=>{
+      console.log(response);
+      setUser(response.data.data)
+      
+    })
+    .catch((err)=>{
+      console.error(err);
+      
+    })
+  },[search])
   return (
     <>
     <TableContainer component={Paper}>

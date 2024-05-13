@@ -2,10 +2,12 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface AdminState {
     addOpen: boolean;
+    searchKeys:string
 }
 
 const initialState: AdminState = {
     addOpen: false,
+    searchKeys:""
 };
 
 const adminSlice=createSlice({
@@ -21,9 +23,12 @@ const adminSlice=createSlice({
             state.addOpen=false;
 
         },
+        searchInput:(state,action:PayloadAction<string>)=>{
+            state.searchKeys=action.payload;
+        }
         
     }
 })
 
-export const {openAdduser,closeAdduser }=adminSlice.actions;
+export const {openAdduser,closeAdduser,searchInput }=adminSlice.actions;
 export default adminSlice.reducer;

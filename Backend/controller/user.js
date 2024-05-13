@@ -18,7 +18,7 @@ module.exports = {
       else{
             const matched=await bcrypt.compare(password, user.password)
             if (matched) {
-              const Token=token(email)
+              const Token=token(email,user.role)
               res.status(200).json({ message: "user loggedIn",token:Token });
             }
             else{
@@ -38,8 +38,10 @@ module.exports = {
       const user = await userH.findUser(email);
       if (!user) {
         const insertdata = await userH.insert(datas);
-        const Token=token(email)
-            res.status(200).json({ message: "successfully inserted user data",token:Token });
+        // const role='user'
+        // const Token=token(email,role)
+        // console.log(Token);
+            res.status(200).json({ message: "successfully inserted user data"});
         }
         else{
             console.log("existing email");
@@ -58,9 +60,9 @@ module.exports = {
         if (err) return res.sendStatus(403);
     
         req.user = user;
-        // console.log(req.user);
+        console.log(req.user);
 
-        if(req.user){
+        if(req.user.mail && req.user.role ==='user'){
 
             const userData=await userH.findUser(req.user.mail)
             // console.log(userData);

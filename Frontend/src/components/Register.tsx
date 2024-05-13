@@ -35,7 +35,7 @@ export const Register:React.FC = () => {
     const handleSubmit =async (e:React.FormEvent)=>{
 
         e.preventDefault();
-        setError(null);
+        setError(null);   
 
          //check the empty field
          if(isEmpty(userData.name) || isEmpty(userData.email) || isEmpty(userData.password) || isEmpty(userData.age)){

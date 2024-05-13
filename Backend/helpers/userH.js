@@ -52,5 +52,12 @@ module.exports = {
       email:Email
     })
     return true
-  }
+  },
+  searchingUser:async (search) => {
+    const nameRegex = new RegExp(search, 'i');
+    const data = await User.find({ name: nameRegex });
+    console.log(data);
+    return data;
+}
+
 };

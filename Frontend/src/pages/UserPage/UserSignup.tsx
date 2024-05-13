@@ -1,10 +1,9 @@
-import { Loginpage } from "../../components/Loginpage"
+import { Register } from "../../components/Register"
 
-Loginpage
 const UserSignup = () => {
   return (
     <div>
-        <Loginpage />
+        <Register />
     </div>
   )
 }

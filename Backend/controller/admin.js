@@ -2,6 +2,7 @@ const { json } = require("body-parser");
 const { token } = require("../utils/jwt");
 const Admin = require("../modal/adminSchema");
 const userH = require("../helpers/userH");
+const { query } = require("express");
 
 module.exports = {
   adminLogin: async (req, res) => {
@@ -17,7 +18,7 @@ module.exports = {
       const Password = adminData.password;
       if (Email == email) {
         if (Password == password) {
-          const Token = token(Email);
+          const Token = token(Email,adminData.role);
           res.status(200).json({ message: "admin loggedIn", token: Token });
         } else {
           res.status(400).json({ message: "invalid password" });
@@ -80,4 +81,18 @@ module.exports = {
       res.status(401).json({ message: "email exist" });
     }
   },
+  search:async (req,res)=>{
+    console.log(req.query);
+    try {
+      const {search} =req.query
+      if(search){
+
+        const data =await userH.searchingUser(search)
+        res.json({data:data})
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({error:'searching user error'})
+    }
+  }
 };
