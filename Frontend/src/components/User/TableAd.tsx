@@ -11,9 +11,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ChangeEvent, useEffect, useState } from "react";
 import axios from "axios";
 // import { useNavigate } from "react-router-dom";
-import { isEmpty } from "../helper/validation";
-import { AddUser } from './AddUser';
+import { isEmpty } from "../../helper/validation";
+import { AddUser } from '../Admin/AddUser';
 import { useSelector } from "react-redux";
+import { RootState } from "../../Redux/appStore";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -43,10 +44,10 @@ type createData = {
   age: string;
 };
 
-export const TableAd = () => {
+export const TableAd:React.FC = () => {
   const [user, setUser] = useState<createData[]>([]);
-  const openAddUser =useSelector((store)=>store.addUser.addOpen)
-  const search =useSelector((store)=>store.addUser.searchKeys)
+  const openAddUser =useSelector((store:RootState)=>store.addUser.addOpen)
+  const search =useSelector((store:RootState)=>store.addUser.searchKeys)
   const [refresh,setRefresh] = useState<number>(0)
   const pageRefresh= ()=>{
     setRefresh(()=>refresh + 1)
@@ -72,7 +73,7 @@ export const TableAd = () => {
     } catch (error) {
       console.error(error);
     }
-  },[refresh]);
+  },[refresh, token]);
 
   //edit*******
   const [openEdit,setOpenEdit]=useState<boolean>(false)

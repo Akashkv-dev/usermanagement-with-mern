@@ -1,8 +1,8 @@
-import { AdminLogin } from "../../components/AdminLogin"
+import Login from "../../components/Admin/Login"
 const Adminlogin = () => {
   return (
     <div>
-        <AdminLogin />
+        <Login />
 
     </div>
   )

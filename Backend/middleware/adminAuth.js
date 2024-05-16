@@ -1,18 +1,21 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
-function authenticateToken(req, res, next) {
-    const token = req.headers.authorization;
-    // console.log("auth",token);
+function adminAuthenticate(req, res, next) {
+  const token = req.headers.authorization;
   
-    if (token == null) return res.sendStatus(401);
+  if (token == null) return res.status(401);
   
-    jwt.verify(token, process.env.secret_key, (err, user) => {
-      if (err) 
-      return res.sendStatus(403);
-  
-      req.user = user;
+  jwt.verify(token, process.env.secret_key, (err, user) => {
+    if (err) return res.status(403).json({ message: "invalid token" });
+    
+    req.user = user;
+    console.log("auth",req.user);
+    if (req.user.role == "admin") {
       next();
-    });
-  }
+    } else {
+     return res.status(403).json({ message: "not valid admin" });
+    }
+  });
+}
 
-  module.exports= authenticateToken;
+module.exports = adminAuthenticate;

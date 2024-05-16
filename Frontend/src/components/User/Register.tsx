@@ -1,7 +1,7 @@
 import {  useState } from "react"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { isEmpty } from "../helper/validation";
+import { isEmpty } from "../../helper/validation";
 
 
 
@@ -49,7 +49,7 @@ export const Register:React.FC = () => {
                     if(response.status===200){
                         console.log(response);
                         // alert(response.data.message)
-                        navigate("/login")
+                        navigate("/")
                     }
                     else{
                        console.log("unhandled status code:",response.status);
@@ -58,8 +58,8 @@ export const Register:React.FC = () => {
                 })
                 .catch((error)=>{
                     if(error.response){
-                        console.log("error")
-                        alert(error.response.data.message)
+                        console.log(error)
+                        setError(error.response.data.error || error.response.data.message)
                     }
                     else if(error.request){
                         console.error("no response from server")

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,10 +10,10 @@ import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { openAdduser } from "../Redux/adminSlice";
-import { searchInput } from "../Redux/adminSlice";
+import { openAdduser } from "../../Redux/adminSlice";
+import { searchInput } from "../../Redux/adminSlice";
 import { TextField } from "@mui/material";
 // import { Search } from "@mui/icons-material";
 
@@ -37,7 +37,7 @@ export const Dashboard = () => {
   const clickAddUser = () => {
     dispatch(openAdduser(true));
   };
-  const handleSearch =(e:React.FormEvent)=>{
+  const handleSearch =(e:React.ChangeEvent<HTMLInputElement>)=>{
     const search =e.target.value.trim()
     console.log("handlesearch",search);
     dispatch(searchInput(search))

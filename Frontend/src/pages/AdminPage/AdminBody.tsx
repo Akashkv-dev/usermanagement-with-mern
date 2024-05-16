@@ -1,4 +1,4 @@
-import { AdminBody } from '../../components/AdminBody';
+import { AdminBody } from '../../components/Admin/AdminBody';
 
 
 const Adminbody = () => {

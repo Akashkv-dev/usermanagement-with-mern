@@ -3,12 +3,13 @@ const { token } = require("../utils/jwt");
 const Admin = require("../modal/adminSchema");
 const userH = require("../helpers/userH");
 const { query } = require("express");
+const adminH = require("../helpers/adminH");
 
 module.exports = {
   adminLogin: async (req, res) => {
     const { email, password } = req.body;
     console.log(email);
-    const adminData = await Admin.findOne({ email: email });
+    const adminData = await adminH.findAdmin(email)
     console.log(adminData);
 
     if (!adminData) {
@@ -18,8 +19,8 @@ module.exports = {
       const Password = adminData.password;
       if (Email == email) {
         if (Password == password) {
-          const Token = token(Email,adminData.role);
-          res.status(200).json({ message: "admin loggedIn", token: Token });
+          const Token = token(Email,'admin');
+          res.status(200).json({ message: "admin loggedIn", token: Token, role:'admin' });
         } else {
           res.status(400).json({ message: "invalid password" });
         }
@@ -87,8 +88,13 @@ module.exports = {
       const {search} =req.query
       if(search){
 
-        const data =await userH.searchingUser(search)
+        const data =await adminH.searchingUser(search)
         res.json({data:data})
+      }
+      else{
+        const users = await adminH.allUser();
+        res.json({data:users})
+
       }
     } catch (error) {
       console.error(error);

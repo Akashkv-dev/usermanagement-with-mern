@@ -19,16 +19,12 @@ module.exports = {
         age:age
       });
     } catch (error) {
-      console.log(error, "inserting error helper");
+      throw error;
     }
   },
   findUser: async (Email) => {
     const user = await User.findOne({ email: Email });
     return user;
-  },
-  allUser:async ()=>{
-    const users =await User.find().lean()
-    return users
   },
   updateUser:async (id,value)=>{
     await User.findByIdAndUpdate(
@@ -52,12 +48,6 @@ module.exports = {
       email:Email
     })
     return true
-  },
-  searchingUser:async (search) => {
-    const nameRegex = new RegExp(search, 'i');
-    const data = await User.find({ name: nameRegex });
-    console.log(data);
-    return data;
-}
+  }
 
 };

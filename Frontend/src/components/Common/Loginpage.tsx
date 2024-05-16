@@ -1,75 +1,75 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios,{ AxiosError} from "axios";
-import { isEmpty } from "../helper/validation";
+import axios from "axios";
+import { isEmpty } from "../../helper/validation";
 
-interface ErrorResponse {
-    message?:string ;
+
+interface Props {
+  head: string;
+  loginType: "user" | "admin";
 }
 
-export const Loginpage = () => {
-  const navigate =useNavigate()
+const Loginpage: React.FC<Props> = ({ head, loginType }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/home");
+    }
+  }, [navigate]);
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    if(isEmpty(email)){
-      setError("Enter the email")
-      return
-    }else if(isEmpty(password)){
-      setError("enter the password")
-      return
+    if (isEmpty(email)) {
+      setError("Enter the email");
+      return;
+    } else if (isEmpty(password)) {
+      setError("enter the password");
+      return;
     }
     try {
-    //   const response = await axios.post(`http://localhost:3000/login`, {
-    //     email,
-    //     password,
-    //   });
-   const response =await axios({
-        method: 'post',
-        url: 'http://localhost:3000/login',
-        data: {
-            email,
-            password
-        }
-      });
-      console.log(response);
-      if (response.status == 200) {
-        const token = response.data.token
-        localStorage.setItem("token",token)
-        navigate("/")
-      } 
-    } 
-    catch (err) {
-      if (axios.isAxiosError(err)) {
-        const axiosError= err as AxiosError<ErrorResponse>;
-        if (axiosError.response && axiosError.response.status === 404) {
-            const errorData = axiosError.response?.data?.message; 
-            setError(errorData || "user not found")       
-        } else {
-          console.error("Login failed with error: ", err);
-          const errorData = axiosError.response?.data?.message;
-          setError(errorData || "Login failed");
-        }
-      } else {
-        console.error("Login failed with error: ", err);
-        setError("Login failed");
-      }
+      await axios
+        .post(
+          `http://localhost:3000/${loginType === "admin" ? "admin/login" : "login"}`,
+          { email, password }
+        )
+        .then((response) => {
+          if (response.status == 200 && response.data.role === "user") {
+            const token = response.data.token;
+            localStorage.setItem("token", token);
+            navigate("/home");
+          } else if (response.status == 200 && response.data.role === "admin") {
+            console.log(response);
+            const token = response.data.token;
+            localStorage.setItem("admin", token);
+            navigate("/admin/dashboard");
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response);
+            setError(error.response.data.message);
+          }
+        });
+    } catch (err) {
+      console.error(err);
     }
-}
-  
+  };
+
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
   return (
     <div className=" h-screen mx-auto'">
       <h1 className="text-center text-3xl text-[#9fafca] hover:text-[#b8df10] font-extrabold pt-10 pb-10">
-        Login Form
+        {head}
       </h1>
       {error ? <div>{error}</div> : ""}
       <form className="max-w-sm mx-auto w-full" onSubmit={handleSubmit}>
@@ -114,16 +114,18 @@ export const Loginpage = () => {
             Sign In
           </button>
           <p className="mt-2 text-gray-600 cursor-pointer">
-              Don't have an account?{" "}
-              <span
-                className="text-blue-700"
-                onClick={() => navigate("/register")}
-              >
-                Register
-              </span>
-            </p>
+            Don't have an account?{" "}
+            <span
+              className="text-blue-700"
+              onClick={() => navigate("/register")}
+            >
+              Register
+            </span>
+          </p>
         </div>
       </form>
     </div>
   );
 };
+
+export default Loginpage;

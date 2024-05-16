@@ -1,4 +1,4 @@
-import {Home} from '../../components/Home'
+import {Home} from '../../components/User/Home'
 const Homepage = () => {
   return (
     <div>

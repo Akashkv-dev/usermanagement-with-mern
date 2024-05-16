@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { closeAdduser } from "../Redux/adminSlice";
-import { isEmpty } from "../helper/validation";
+import { closeAdduser } from "../../Redux/adminSlice";
+import { isEmpty } from "../../helper/validation";
 import axios from "axios";
 
 
