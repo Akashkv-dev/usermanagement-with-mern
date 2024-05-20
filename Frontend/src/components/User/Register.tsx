@@ -23,9 +23,18 @@ export const Register:React.FC = () => {
         age: ""
     })
     const handleChange=(e:React.ChangeEvent<HTMLInputElement>):void=>{
+      const { name, value } = e.target;
+      if (name === 'email') {
+        const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+        if (!emailPattern.test(value)) {
+          setError('Please enter a valid email address.');
+        } else {
+          setError('');
+        }
+      }
         setUserData({
             ...userData,
-      [e.target.name]: e.target.value,
+      [name]: value,
 
         })
     }
@@ -107,6 +116,8 @@ export const Register:React.FC = () => {
             onChange={handleChange}
             name="email"
             autoComplete="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            required
           />
           <label htmlFor="password" className="text-white">
             Password

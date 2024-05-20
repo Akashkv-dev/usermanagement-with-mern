@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const User = require("../modal/userSchema");
-const Trash = require("../modal/trashSchema")
 
 
 module.exports = {
@@ -34,20 +33,9 @@ module.exports = {
     )
     return true;
   },
-  deleteUser:async (Id)=>{
-    console.log(Id);
-    const trash =await User.deleteOne({_id:Id})
-  },
   findUserbyId: async (id) => {
     const user = await User.findOne({ _id:id });
     return user;
-  },
-  insertTrash:async (Name,Email)=>{
-    await Trash.insertMany({
-      name:Name,
-      email:Email
-    })
-    return true
   }
 
 };

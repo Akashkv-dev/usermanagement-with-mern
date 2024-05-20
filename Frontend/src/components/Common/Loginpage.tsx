@@ -82,6 +82,7 @@ const Loginpage: React.FC<Props> = ({ head, loginType }) => {
             className="border-none mb-3 rounded-md"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
+            autoComplete="email"
           />
           <label htmlFor="password" className="text-white">
             Password
@@ -113,15 +114,18 @@ const Loginpage: React.FC<Props> = ({ head, loginType }) => {
           >
             Sign In
           </button>
+          {loginType ==='admin' ? '' :  
           <p className="mt-2 text-gray-600 cursor-pointer">
-            Don't have an account?{" "}
-            <span
-              className="text-blue-700"
-              onClick={() => navigate("/register")}
-            >
-              Register
-            </span>
-          </p>
+          Don't have an account?{" "}
+          <span
+            className="text-blue-700"
+            onClick={() => navigate("/register")}
+          >
+            Register
+          </span>
+        </p>
+          }
+          
         </div>
       </form>
     </div>

@@ -8,11 +8,11 @@ module.exports = {
   loginUser: async (req, res) => {
     try {
       const { email, password } = req.body;
-      console.log(req.body);
+      // console.log(req.body);
       const user = await userH.findUser(email);
       console.log(user);
 
-      if (!user) {
+      if (!user || user.active === false) {
         res.status(404).json({ message: "invalid user" });
       } else {
         const matched = await bcrypt.compare(password, user.password);
@@ -31,7 +31,7 @@ module.exports = {
   },
   signUp: async (req, res) => {
     try {
-      console.log(req.body);
+      // console.log(req.body);
       const { name, email, password, age } = req.body;
       const pwLength = Object.values(password).length;
       const datas = req.body;

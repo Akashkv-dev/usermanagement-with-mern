@@ -24,6 +24,10 @@ const userSchema =new mongoose.Schema({
     role:{
         type:String,
         default:'user'
+    },
+    active:{
+        type:Boolean,
+        default:true
     }
 })
 

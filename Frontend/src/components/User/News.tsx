@@ -46,13 +46,13 @@ export const News = () => {
 
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="mt-10">Loading...</div>;
   }
   if (error) {
     return <div>Error: {error.message}</div>;
   }
   return (
-    <div className="flex flex-wrap justify-center">
+    <div className="flex flex-wrap justify-center pt-9">
       {data.map((item,index) => (
         <div className="m-2" key={index}>
             <Card  sx={{ maxWidth: 385, maxHeight:400 }}>

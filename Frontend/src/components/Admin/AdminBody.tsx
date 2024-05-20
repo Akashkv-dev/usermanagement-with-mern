@@ -1,5 +1,5 @@
 import { Dashboard } from "./AdminNav";
-import { TableAd } from "../User/TableAd";
+import { TableAd } from "./TableAd";
 
 export const AdminBody = () => {
 

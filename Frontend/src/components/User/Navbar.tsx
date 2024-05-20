@@ -46,7 +46,7 @@ export const Navbar = () => {
       <div>
         <div>
           <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" color="default">
+            <AppBar position="fixed" color="default">
               <Toolbar>
                 <IconButton
                   size="large"

@@ -1,11 +1,11 @@
 import React from "react";
-import { Navigate, RouteProps } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
-interface AdminAuthProps extends RouteProps {
+interface AdminAuthProps {
     children: React.ReactNode;
 }
 
-const AdminAuth:React.FC=({children}:AdminAuthProps)=>{
+const AdminAuth: React.FC<AdminAuthProps>=({children})=>{
 
     const isLoggedIn=!!localStorage.getItem("admin");
 

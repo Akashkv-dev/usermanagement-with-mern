@@ -12,7 +12,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import axios from "axios";
 // import { useNavigate } from "react-router-dom";
 import { isEmpty } from "../../helper/validation";
-import { AddUser } from '../Admin/AddUser';
+import { AddUser } from './AddUser';
 import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/appStore";
 
